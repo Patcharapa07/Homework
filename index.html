@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>ตารางงานรายวัน</title>
+<style>
+  body { font-family: sans-serif; background:#f7f7f7; padding:20px;}
+  .grid { display: grid; grid-template-columns: repeat(7,1fr); gap:5px; }
+  .day { background:#fff; padding:8px; border:1px solid #ccc; min-height:120px; position:relative; }
+  .day h4 { margin:0 0 5px; font-size:14px; }
+  .task { margin:4px 0; padding:3px 5px; border-radius:4px; color:#fff; font-size:13px; display:flex; justify-content: space-between; align-items: center; }
+  .task.homework { background:#4CAF50; }
+  .task.exam { background:#FF9800; }
+  .task.other { background:#3F51B5; }
+  .task button { background:transparent; border:none; color:white; cursor:pointer; font-weight:bold; margin-left:8px;}
+  .controls { margin-bottom:15px; }
+  select, input { padding:5px; font-size:14px; margin-right:5px; }
+  button.add { padding:5px 10px; font-size:14px; }
+</style>
+</head>
+<body>
+<div class="controls">
+  <select id="day"><option value="0">จันทร์</option><option value="1">อังคาร</option><option value="2">พุธ</option><option value="3">พฤหัส</option><option value="4">ศุกร์</option><option value="5">เสาร์</option><option value="6">อาทิตย์</option></select>
+  <select id="type"><option value="homework">การบ้าน</option><option value="exam">สอบ</option><option value="other">อื่นๆ</option></select>
+  <input type="text" id="taskText" placeholder="พิมพ์รายการงาน...">
+  <button class="add" onclick="addTask()">เพิ่มงาน</button>
+</div>
+
+<div class="grid" id="calendar">
+  <div class="day" id="day-0"><h4>จันทร์</h4></div>
+  <div class="day" id="day-1"><h4>อังคาร</h4></div>
+  <div class="day" id="day-2"><h4>พุธ</h4></div>
+  <div class="day" id="day-3"><h4>พฤหัส</h4></div>
+  <div class="day" id="day-4"><h4>ศุกร์</h4></div>
+  <div class="day" id="day-5"><h4>เสาร์</h4></div>
+  <div class="day" id="day-6"><h4>อาทิตย์</h4></div>
+</div>
+
+<script>
+function addTask() {
+  const d = document.getElementById('day').value;
+  const type = document.getElementById('type').value;
+  const txt = document.getElementById('taskText').value.trim();
+  if (!txt) return;
+  const div = document.createElement('div');
+  div.className = 'task ' + type;
+  div.innerHTML = txt + '<button onclick="this.parentNode.remove()">×</button>';
+  document.getElementById('day-'+d).appendChild(div);
+  document.getElementById('taskText').value = '';
+}
+</script>
+</body>
+</html>
